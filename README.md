@@ -23,6 +23,8 @@ With advancements in image classification models, it is now possible to develop 
  - **Operational Guidelines** : The dataset for this project has been downloaded onto my local machine. It has been unzipped to get the directory named **training_set** inside which there is another directory named **training_set**. This inner **training_set** directory has the image class subdirectories. Now, the top/outer **training_set** directory has been renamed to **dataset**. We shall work with this dataset directory. To keep original dataset untouched so that the EDA done on it could be reproduced, I made a copy of the dataset namely **temp_dataset** in which I did the cleaning/removing of the identified image files. Sunsequently I used this cleaned dataset **'temp_dataset'** to split the data into train, test & validation directories inside the original dataset (named **dataset**). After the operations, I removed the **temp_dataset**.
  
     ![alt text](Capstone1Screenshots/image2.png) 
+
+ ***Note :The dataset directory is more than 8 GB and could not push it to github even with Git LFS. So you have to get it from given link and use as per instruction above***
  
 
 **The Problem**
@@ -114,7 +116,7 @@ With advancements in image classification models, it is now possible to develop 
 
  Model training of the best evaluated model with best model architechture and tuned parameters viz. learning rate, inner layer input size & dropuout rate have been exported from the notebook_Training.ipynb in the form of a script namely **train.py** Running this script will outcome:
 
- - Generation of model file(s) with increasing accuracy in the format **modelxception_v_script_<epoch_number>_<validation_accuracy>.h5** 
+ - Generation of model file(s) with increasing accuracy in the format **xception_v_script_<epoch_number>_<validation_accuracy>.h5** 
  - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
  - After the model training is over, delete all the model files keeping on the one with the top accuracy.
 
