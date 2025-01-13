@@ -2,6 +2,11 @@
 import os
 import warnings
 import numpy as np
+
+# Suppress TensorFlow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # suppress info, warnings but lets out errors
+warnings.filterwarnings("ignore", category=UserWarning, module='tensorflow')
+
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.applications import Xception
@@ -72,10 +77,9 @@ def create_model_architechture(input_size, learning_rate, size_inner, droprate):
     return model
 
 
-
 # Checkpointing to save the best model
 checkpoint =  keras.callbacks.ModelCheckpoint(
-    'xception_v_script_{epoch:02d}_{val_accuracy:.3f}.keras',
+    'xception_v_script_{epoch:02d}_{val_accuracy:.3f}.h5',
     save_best_only=True,
     monitor='val_accuracy',
     mode='max'

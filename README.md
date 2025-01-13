@@ -114,7 +114,11 @@ With advancements in image classification models, it is now possible to develop 
 
  Model training of the best evaluated model with best model architechture and tuned parameters viz. learning rate, inner layer input size & dropuout rate have been exported from the notebook_Training.ipynb in the form of a script namely **train.py** Running this script will outcome:
 
- - Generation of the **model_final.h5** file which holds the final trained model
+ - Generation of model file(s) with increasing accuracy in the format **modelxception_v_script_<epoch_number>_<validation_accuracy>.h5** 
+ - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
+ - After the model training is over, delete all the model files keeping on the one with the top accuracy.
+
+ ![alt text](Capstone1Screenshots/image3.png)
 
 
 ## Dependency and environment management ##
