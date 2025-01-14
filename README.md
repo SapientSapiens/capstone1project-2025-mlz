@@ -193,7 +193,7 @@ With advancements in image classification models, it is now possible to develop 
 
 ## Model Deployment ##
 
- Please run the **ipython** command from the project directory and inside the ipyhton prompt, invoke the lambda_handler with the url of the bird image to be predicted. 
+ Please run the **ipython** command from the project directory and inside the ipyhton prompt, invoke the lambda_handler with the url of the bird image to be predicted. The lambda_handler here is serving the model as in a deployment. Also in the subsequent section we containarize the service serving the model like in a deployment.
 
  ![alt text](Capstone1Screenshots/image5.png)
 
