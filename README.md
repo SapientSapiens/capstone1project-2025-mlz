@@ -277,7 +277,11 @@ With advancements in image classification models, it is now possible to develop 
 
  - Edit basic settings to increase Memory to 1024 MB and timeout to 30 seconds
 
- - Then test the lammbda function by creating & saving a Test Event and executing it
+ - Then test the lammbda function by creating & saving a Test Event 
+ 
+ - I used the url of the house crow used in our test script for creating the Test Event. The test shows the correct result:
+
+  ![alt text](Capstone1Screenshots/image12.png)
 
 
 
