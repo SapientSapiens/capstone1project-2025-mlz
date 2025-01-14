@@ -305,6 +305,10 @@ With advancements in image classification models, it is now possible to develop 
 
      ![alt text](Capstone1Screenshots/image14.png)
 
+  - Let us try again with a new bird from the 25 species. Let us take the Sarus Crane. Apart from a picture of Sarus Crane not in the dataset, I found a complex picture where the are  are accompanying objects in similar pose which can be challenging for the model. Kindly check this image of the Sarus Crane <https://static.theprint.in/wp-content/uploads/2023/03/Untitled-design-11-1.jpg?compress=true&quality=80&w=376&dpr=2.6>  Now, let us change the input iamge url in the cloud_test.py script and run it. We can see the model correctly predicts the bird.
+
+     ![alt text](Capstone1Screenshots/image15.png)
+
 
 
 
