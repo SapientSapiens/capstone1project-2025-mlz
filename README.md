@@ -301,6 +301,10 @@ With advancements in image classification models, it is now possible to develop 
 
  5\. **Testing the Lamda function with the API**
 
+  - A test script cloud_test.py is created for testing the Lambda Function through the API from the gateway.
+
+     ![alt text](Capstone1Screenshots/image14.png)
+
 
 
 
