@@ -120,7 +120,10 @@ With advancements in image classification models, it is now possible to develop 
  - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
  - After the model training is over, delete all the model files keeping on the one with the top accuracy.
 
- ![alt text](Capstone1Screenshots/image3.png)
+ I also created a **convert-model.py** script which takes in a Keras model and converts it to a TFLite model.
+
+
+ 
 
 
 ## Dependency and environment management ##
@@ -167,11 +170,19 @@ With advancements in image classification models, it is now possible to develop 
 
 ## Reproducibility ##
 
- 1\. Use one of the links (you got when started the Jupyter notebook) in the browser to open the Jupyter notebook . From the Jupyter notebook GUI, you can open my notebooks **notebook_EDA.ipynb** and **notebook_Training.ipynb** in the project directory and review it. Note: before running notebook_Training.ipynb remove the train, test & val folders inside the **dataset** directory, as the running the notebook re-creates them.
+ 1\. Use one of the links (you got when started the Jupyter notebook) in the browser to open the Jupyter notebook . From the Jupyter notebook GUI, you can open my notebooks **notebook_EDA.ipynb** and **notebook_Training.ipynb** and **notebook_tflite_service.ipynb** in the project directory and review it. Note: before running notebook_Training.ipynb remove the train, test & val folders inside the **dataset** directory, as the running the notebook re-creates them.
 
- 2\. From inside the project directory at WSL, kindly run the **train.py** script to train the best evaluated model on the image dataset at the train & val folders inside the **dataset** directory which is under the project directory and save the model.
+ 2\. From inside the project directory at WSL, kindly run the **train.py** script to train model on the image dataset at the train & val folders inside the **dataset** directory which is under the project directory and save the best validation accuracy model(s) as describe in the section ***Exporting the Training Notebook to Script*** above
 
     python train.py
+
+ ![alt text](Capstone1Screenshots/image3.png)
+
+  3\. From inside the project directory at WSL, kindly run the **convert-model.py** script to convert the model with best validation accuracy genratred with running train.py. One important thing to note here is you need to fillin the ***model_name*** variable in this script yourself: you choose the name of the best model generated when you run train.py for me the name is 'xception_v_script_17_0.956.h5 but for you it might be different name. So please change this variable with you model name.
+
+    python convert-model.py
+
+ ![alt text](Capstone1Screenshots/image4.png)
 
 
 
