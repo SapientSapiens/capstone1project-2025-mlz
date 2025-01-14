@@ -270,7 +270,7 @@ With advancements in image classification models, it is now possible to develop 
 
  - You should get the lambda function created shown as below
 
-      ![alt text](Capstone1Screenshots/image11.png)
+     ![alt text](Capstone1Screenshots/image11.png)
 
 
  3\. **Test the lambda function created**
@@ -281,9 +281,25 @@ With advancements in image classification models, it is now possible to develop 
  
  - I used the url of the house crow used in our test script for creating the Test Event. The test shows the correct result:
 
-  ![alt text](Capstone1Screenshots/image12.png)
+     ![alt text](Capstone1Screenshots/image12.png)
 
 
+ 4\. **Expose the lambda function using API Gateway**
+
+  - Open the AWS API Gateway section and first create a new REST API
+
+  - Now create a resource for the created API
+
+  - Subsequently, create a Method for the Resource with method type as POST
+
+  - After Method is created, you can deploy the API by creating a stage
+
+  - We can see the stage ('test' in our case) has been created and the URL for public access of the API is generated here.
+
+     ![alt text](Capstone1Screenshots/image13.png)
+
+
+ 5\. **Testing the Lamda function with the API**
 
 
 
