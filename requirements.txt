@@ -6,5 +6,5 @@ matplotlib
 seaborn
 Pillow
 requests
-flask
-gunicorn
+keras_image_helper
+jupyter

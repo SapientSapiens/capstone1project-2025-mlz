@@ -132,7 +132,7 @@ With advancements in image classification models, it is now possible to develop 
 
  1\. Go the your wsl environment from you powershell terminal with administrator privilege. You should land in your WSL home directory by default.
 
-    C:\\> wsl
+    wsl
     
  2\. If you do not have pyenv installed already, please install it and check for successful installation with
 
@@ -162,15 +162,20 @@ With advancements in image classification models, it is now possible to develop 
 
     pip install -r requirements.txt
 
- 9\. In your virtual environment, form within the project directory, run the jupyter notebook
+ 9\. After the model training is over and model conversion from keras to tflite is complete, you would need numpy version 1.23.1 and tflite_runtime. So you need to isntall them
+     at that point of time (in my case, I did that from the notebook_tflite_Service.ipynb itself!)
 
-    jupyter notebook
+       pip install numpy==1.23.1
+
+       pip install --no-deps --extra-index-url https://google-coral.github.io/py-repo/tflite_runtime
 
 
 
 ## Reproducibility ##
 
- 1\. Use one of the links (you got when started the Jupyter notebook) in the browser to open the Jupyter notebook . From the Jupyter notebook GUI, you can open my notebooks **notebook_EDA.ipynb** and **notebook_Training.ipynb** and **notebook_tflite_service.ipynb** in the project directory and review it. Note: before running notebook_Training.ipynb remove the train, test & val folders inside the **dataset** directory, as the running the notebook re-creates them.
+ 1\. Form within the project directory, run the jupyter notebook. From the Jupyter notebook GUI, you can open my notebooks **notebook_EDA.ipynb** and **notebook_Training.ipynb** and **notebook_tflite_service.ipynb** in the project directory and review them. Note: before running notebook_Training.ipynb remove the train, test & val folders inside the **dataset** directory, as the running the notebook re-creates them.
+
+    jupyter notebook
 
  2\. From inside the project directory at WSL, kindly run the **train.py** script to train model on the image dataset at the train & val folders inside the **dataset** directory which is under the project directory and save the best validation accuracy model(s) as describe in the section ***Exporting the Training Notebook to Script*** above
 
@@ -294,7 +299,11 @@ With advancements in image classification models, it is now possible to develop 
 
   - After Method is created, you can deploy the API by creating a stage
 
-  - We can see the stage ('test' in our case) has been created and the URL for public access of the API is generated here.
+  - We can see the stage ('test' in our case) has been created and the URL for public access of the API is generated here. 
+    The genrated invoke url is given below but AWS API Gateway and Lambda services might not be running by the time you are 
+    testing it as shall incur cost.
+
+       <https://mb74pfois9.execute-api.eu-north-1.amazonaws.com/test>
 
      ![alt text](Capstone1Screenshots/image13.png)
 
@@ -305,16 +314,12 @@ With advancements in image classification models, it is now possible to develop 
 
      ![alt text](Capstone1Screenshots/image14.png)
 
-  - Let us try again with a new bird from the 25 species. Let us take the Sarus Crane. Apart from a picture of Sarus Crane not in the dataset, I found a complex picture where the are  are accompanying objects in similar pose which can be challenging for the model. Kindly check this image of the Sarus Crane <https://static.theprint.in/wp-content/uploads/2023/03/Untitled-design-11-1.jpg?compress=true&quality=80&w=376&dpr=2.6>  Now, let us change the input iamge url in the cloud_test.py script and run it. We can see the model correctly predicts the bird.
+  - Let us try again with a new bird from the 25 species. Let us take the Sarus Crane. Apart from a picture of Sarus Crane not in the dataset, 
+    I found a complex picture where the are  are accompanying objects in similar pose which can be challenging for the model. Kindly check this 
+    image of the Sarus Crane <https://static.theprint.in/wp-content/uploads/2023/03/Untitled-design-11-1.jpg?compress=true&quality=80&w=376&dpr=2.6>  
+    Now, let us change the input image url in the cloud_test.py script and run it. We can see the model correctly predicts the bird.
 
      ![alt text](Capstone1Screenshots/image15.png)
-
-
-
-
-
-
-
 
 
 
