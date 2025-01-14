@@ -114,17 +114,17 @@ With advancements in image classification models, it is now possible to develop 
 
 ## Exporting the Training Notebook to Script ##
 
- Model training of the best evaluated model with best model architechture and tuned parameters viz. learning rate, inner layer input size & dropuout rate have been exported from the notebook_Training.ipynb in the form of a script namely **train.py** Running this script will outcome:
+ 1\. Model training of the best evaluated model with best model architechture and tuned parameters viz. learning rate, inner layer input size & dropuout rate have been exported from the notebook_Training.ipynb in the form of a script namely **train.py** Running this script will outcome:
 
- - Generation of model file(s) with increasing accuracy in the format **xception_v_script_<epoch_number>_<validation_accuracy>.h5** 
- - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
- - After the model training is over, delete all the model files keeping on the one with the top accuracy.
+   - Generation of model file(s) with increasing accuracy in the format **xception_v_script_<epoch_number>_<validation_accuracy>.h5** 
+   - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
+   - After the model training is over, delete all the model files keeping on the one with the top accuracy.
 
- I also created a **convert-model.py** script which takes in a Keras model and converts it to a TFLite model.
+ 2\. From the notebook **notebook_tflite_Service.ipynb**, I created a **convert-model.py** script which takes in a Keras model and converts it to a TFLite model.
 
+ 3\. From the notebook **notebook_tflite_Service.ipynb**, I also created a **lambda_function.py** script the lambda_handler in which when invoked with a image (bird) url, returns the most probable class/species of the bird with the probability. 
 
  
-
 
 ## Dependency and environment management ##
 
@@ -188,13 +188,9 @@ With advancements in image classification models, it is now possible to develop 
 
 ## Model Deployment ##
 
- 1\. Please run the **gunicorn** WSGI http server to make the flask web-service (**predict.py)** serving the model, active for consumption/use by running this command inside the virtual environment from inside the project folder
+ 1\. Please run the **ipython** command from the project directory and inside the ipyhton prompt, invoke the lambda_handler with the url of the bird image to be predicted. 
 
-    gunicorn --bind 0.0.0.0:9696 predict:app
-
- 2\. When the gunicorn server had started successfully, open another powershell window, go to WSL and cd to project folder.  Now, you can run the **test.py** from within tfrom inside the project directory to see if the deployed model is served through the web service and what the model predicts.
-
-    python test.py
+ ![alt text](Capstone1Screenshots/image5.png)
 
 
 ## Containerization ##

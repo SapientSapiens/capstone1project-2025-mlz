@@ -1,9 +1,11 @@
+import numpy as np
+
 #import from tflite_runtime tflite
 import tflite_runtime.interpreter as tflite
 from keras_image_helper import create_preprocessor
 
 # loading the tflite model
-interpreter = tflite.Interpreter(model_path='clothing-model.tflite')
+interpreter = tflite.Interpreter(model_path='final_deployable_model.tflite')
 interpreter.allocate_tensors()
 
 input_index = interpreter.get_input_details()[0]['index']
