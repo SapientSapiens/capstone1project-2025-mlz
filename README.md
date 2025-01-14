@@ -226,7 +226,58 @@ With advancements in image classification models, it is now possible to develop 
  ![alt text](Capstone1Screenshots/image8.png)
 
 
+## Cloud Deployment ##
 
+ 1\. **Publishing the image to AWS ECR**
+   
+ - Install awscli
+
+       pip install awscli
+
+ - Create AWS Elastic Container Registry repository and log in to the same. You may have to configure with aws configure prior to this, if not done already.
+
+       aws ecr create-repository --repository-name capstone1-mlz
+
+ - After creation of the ECR repository, set the variables for REMOTE_URI to the ECR
+
+       ACCOUNT=230579966543
+       REGION=eu-north-1
+       REGISTRY=capstone1-mlz
+       PREFIX=${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${REGISTRY}
+       TAG=capstone1-model-ver-lambda01
+       REMOTE_URI=${PREFIX}:${TAG}
+
+       echo ${REMOTE_URI}
+
+ - Tag the Docker image built on the local machine and push it to the ECR
+
+       docker tag capstone1-mlz:latest ${REMOTE_URI}
+
+       docker push ${REMOTE_URI}
+
+     ![alt text](Capstone1Screenshots/image9.png)
+
+ - After the image has been pushed to the ECR repository, it shows there
+ 
+     ![alt text](Capstone1Screenshots/image10.png) 
+
+
+ 2\. **Create a lambda function in AWS, using the ECR image**
+
+ - Create the AWS Lambda function choosing options as Container Image 
+
+ - Select the required container image from the ECR repository, i.e., ***capstone1-model-ver-lambda01***
+
+ - You should get the lambda function created shown as below
+
+      ![alt text](Capstone1Screenshots/image11.png)
+
+
+ 3\. **Test the lambda function created**
+
+ - Edit basic settings to increase Memory to 1024 MB and timeout to 30 seconds
+
+ - Then test the lammbda function by creating & saving a Test Event and executing it
 
 
 
