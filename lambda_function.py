@@ -41,6 +41,8 @@ bird_classes= ['Asian Green Bee-Eater',
  'White-Breasted Kingfisher',
  'White-Breasted Waterhen']
 
+print("inside lambda_function........")
+
 def predict(url):
     # feed image to preprocessor
     X = preprocessor.from_url(url)
@@ -65,6 +67,7 @@ def predict(url):
 
 
 def lambda_handler(event, context):
+    print("inside lambda_handler.........")
     url = event['url']
     result = predict(url)
     return result

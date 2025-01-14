@@ -120,7 +120,7 @@ With advancements in image classification models, it is now possible to develop 
    - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
    - After the model training is over, delete all the model files keeping on the one with the top accuracy.
 
- 2\. From the notebook **notebook_tflite_Service.ipynb**, I created a **convert-model.py** script which takes in a Keras model and converts it to a TFLite model.
+ 2\. From the notebook **notebook_tflite_Service.ipynb**, I created a **convert-model.py** script which takes in a Keras model and converts it to a TFLite model named **final_deployable_model.tflite**
 
  3\. From the notebook **notebook_tflite_Service.ipynb**, I also created a **lambda_function.py** script the lambda_handler in which when invoked with a image (bird) url, returns the most probable class/species of the bird with the probability. 
 
@@ -205,19 +205,25 @@ With advancements in image classification models, it is now possible to develop 
 
  5\. Now from the project directory in the WSL, issue the command to build the docker image. The image would be built as mentioned in the submitted **Dockerfile**.
 
-    docker build -t capstone1-2025 .
+    docker build -t capstone1-mlz .
 
- 6\. After the image is built and the application successfully containerized, we can list the image from the WSL by following command
+  6\. After the image is built and the application successfully containerized, we can list the image from the WSL by following command
 
     docker images
 
+ ![alt text](Capstone1Screenshots/image6.png)
+
  7\. Now run the containerized application from the project folder
 
-    docker run -it --rm -p 9696:9696 capstone1-2025
+    docker run -it --rm -p 9696:9696 capstone1-mlz
+
+  ![alt text](Capstone1Screenshots/image7.png)
 
  8\.  Now activate virtual environment in another WSL tab from inside the project directory and run the **test.py**  from inside the project directory to get the **predict** service from the containerized application
 
     python test.py
+
+ ![alt text](Capstone1Screenshots/image8.png)
 
 
 

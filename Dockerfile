@@ -1,5 +1,4 @@
-FROM python:3.10.0-slim
-
+FROM public.ecr.aws/lambda/python:3.10
 
 RUN pip install keras-image-helper
 RUN pip install numpy==1.23.1
@@ -8,4 +7,4 @@ RUN pip install --no-deps https://github.com/alexeygrigorev/tflite-aws-lambda/ra
 COPY final_deployable_model.tflite .
 COPY lambda_function.py .
 
-CMD ["lambda_function.lambda_handler"]
+CMD [ "lambda_function.lambda_handler" ]
