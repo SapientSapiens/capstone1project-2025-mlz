@@ -15,10 +15,10 @@ With advancements in image classification models, it is now possible to develop 
 
 **The Dataset**
 
- The dataset is sourced from Kaggle's "25 Indian Bird Species with 226k Images" dataset and can be found at  <https://www.kaggle.com/datasets/arjunbasandrai/25-indian-bird-species-with-226k-images/>. It contains labelled images of 25 different bird species commonly found in India. The dataset is organized into subdirectories, each representing a specific bird species, with numerous images capturing different poses, lighting conditions, and natural backgrounds.Key Attributes of the Dataset are:
+ The dataset is sourced from Kaggle's "25 Indian Bird Species with 22.6k Images" dataset and can be found at  <https://www.kaggle.com/datasets/arjunbasandrai/25-indian-bird-species-with-226k-images/>. It contains labelled images of 25 different bird species commonly found in India. The dataset is organized into subdirectories, each representing a specific bird species, with numerous images capturing different poses, lighting conditions, and natural backgrounds.Key Attributes of the Dataset are:
 
  - **Species Diversity** : 25 Indian bird species, including both common and lesser-known species.
- - **Large Volume** : Over 226,000 images, ensuring the model is exposed to a wide variety of visual representations for each species.
+ - **Large Volume** : Over 22,600 images, ensuring the model is exposed to a wide variety of visual representations for each species.
  - **Real-World Conditions** : Images captured in natural settings, featuring different angles, lighting conditions, and backgrounds to ensure robustness.
  - **Operational Guidelines** : The dataset for this project has been downloaded onto my local machine. It has been unzipped to get the directory named **training_set** inside which there is another directory named **training_set**. This inner **training_set** directory has the image class subdirectories. Now, the top/outer **training_set** directory has been renamed to **dataset**. We shall work with this dataset directory. To keep original dataset untouched so that the EDA done on it could be reproduced, I made a copy of the dataset namely **temp_dataset** in which I did the cleaning/removing of the identified image files. Sunsequently I used this cleaned dataset **'temp_dataset'** to split the data into train, test & validation directories inside the original dataset (named **dataset**). After the operations, I removed the **temp_dataset**.
  
@@ -208,7 +208,7 @@ With advancements in image classification models, it is now possible to develop 
 
  4\. Start the Docker Engine in the Docker Desktop, if not already started.
 
- 5\. Now from the project directory in the WSL, issue the command to build the docker image. The image would be built as mentioned in the submitted **Dockerfile**.
+ 5\. Now open one WSL tab and go the project directory. From there, issue the command to build the docker image. The image would be built as as per the submitted **Dockerfile**.
 
     docker build -t capstone1-mlz .
 
@@ -218,13 +218,13 @@ With advancements in image classification models, it is now possible to develop 
 
  ![alt text](Capstone1Screenshots/image6.png)
 
- 7\. Now run the containerized application from the project folder
+ 7\. Now run the containerized application.
 
     docker run -it --rm -p 9696:9696 capstone1-mlz
 
   ![alt text](Capstone1Screenshots/image7.png)
 
- 8\.  Now activate virtual environment in another WSL tab from inside the project directory and run the **test.py**  from inside the project directory to get the **predict** service from the containerized application
+ 8\.  Now open another WSL tab and go to the project directory and run the **test.py**  from inside the project directory to get the **predict** service from the containerized application
 
     python test.py
 
