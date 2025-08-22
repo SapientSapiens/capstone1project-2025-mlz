@@ -33,14 +33,14 @@ val_gen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 # Image reference loading
 train_ds = train_gen.flow_from_directory(
-    './dataset/train',
+    '../dataset/train',
     target_size=(input_size, input_size),
     batch_size=32,
     seed=SEED
 )
 
 val_ds = val_gen.flow_from_directory(
-    './dataset/val',
+    '../dataset/val',
     target_size=(input_size, input_size),
     batch_size=32,
     seed=SEED,
@@ -79,7 +79,7 @@ def create_model_architechture(input_size, learning_rate, size_inner, droprate):
 
 # Checkpointing to save the best model
 checkpoint =  keras.callbacks.ModelCheckpoint(
-    'xception_v_script_{epoch:02d}_{val_accuracy:.3f}.h5',
+    '../models/xception_v_script_{epoch:02d}_{val_accuracy:.3f}.h5',
     save_best_only=True,
     monitor='val_accuracy',
     mode='max'

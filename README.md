@@ -22,7 +22,7 @@ With advancements in image classification models, it is now possible to develop 
  - **Real-World Conditions** : Images captured in natural settings, featuring different angles, lighting conditions, and backgrounds to ensure robustness.
  - **Operational Guidelines** : The dataset for this project has been downloaded onto my local machine. It has been unzipped to get the directory named **training_set** inside which there is another directory named **training_set**. This inner **training_set** directory has the image class subdirectories. Now, the top/outer **training_set** directory has been renamed to **dataset**. We shall work with this dataset directory. To keep original dataset untouched so that the EDA done on it could be reproduced, I made a copy of the dataset namely **temp_dataset** in which I did the cleaning/removing of the identified image files. Sunsequently I used this cleaned dataset **'temp_dataset'** to split the data into train, test & validation directories inside the original dataset (named **dataset**). After the operations, I removed the **temp_dataset**.
  
-    ![alt text](Capstone1Screenshots/image2.png) 
+    ![alt text](images/image2.png) 
 
  ***Note :The dataset directory is more than 8 GB and could not push it to github even with Git LFS. So you have to get it from given link and use as per instruction above***
  
@@ -59,6 +59,11 @@ With advancements in image classification models, it is now possible to develop 
 
  - **Urban and Rural Planning** : Informing planners about bird-friendly designs for urban parks and conservation areas. Promoting sustainable development practices by understanding bird species distribution in affected regions.
 
+
+## Technical Overview ##
+
+  ![alt text](images/DTC_draw_version2.jpg)
+
  
 ## Exploratory Data Analysis ##
 
@@ -87,7 +92,7 @@ With advancements in image classification models, it is now possible to develop 
   - duplicate image files
   - blurry image files
 
- _These exercises could be found in my_ **_notebook_EDA.ipynb_**
+ _These exercises could be found in my_ [**_notebook_EDA.ipynb_**](notebooks/notebook_EDA.ipynb)
 
 
 
@@ -109,26 +114,26 @@ With advancements in image classification models, it is now possible to develop 
  - Finally, a larger model of input size 299*299 is trained with the best learning rate, inner layer input size and dropout rate, the final model is saved with checkpointing.
  - This final model is then loaded and evaluated on the unseen test data (images in the test directory - needs to be loaded beforehand with the ImageDataGenerator)
 
- _These exercises could be found in my_ **_notebook_Training.ipynb_**
+ _These exercises could be found in my_ [**_notebook_Training.ipynb_**](notebooks/notebook_Training.ipynb)
 
 
 ## Exporting the Training Notebook to Script ##
 
- 1\. Model training of the best evaluated model with best model architechture and tuned parameters viz. learning rate, inner layer input size & dropuout rate have been exported from the notebook_Training.ipynb in the form of a script namely **train.py** Running this script will outcome:
+ 1\. Model training of the best evaluated model with best model architechture and tuned parameters viz. learning rate, inner layer input size & dropuout rate have been exported from the notebook_Training.ipynb in the form of a script namely [**train.py**](model-development/train.py) Running this script will outcome:
 
    - Generation of model file(s) with increasing accuracy in the format **xception_v_script_<epoch_number>_<validation_accuracy>.h5** 
    - If in the training, after subsequent epochs, the validation accuracy increases, new model files with higher accuracy shall continue to get saved in the project directory.
    - After the model training is over, delete all the model files keeping on the one with the top accuracy.
 
- 2\. From the notebook **notebook_tflite_Service.ipynb**, I created a **convert-model.py** script which takes in a Keras model and converts it to a TFLite model named **final_deployable_model.tflite**
+ 2\. From the notebook [**notebook_tflite_Service.ipynb**](notebooks/notebook_tflite_Service.ipynb), I created a [**convert-model.py**](model-development/convert-model.py) script which takes in a Keras model and converts it to a TFLite model named [**final_deployable_model.tflite**](models/final_deployable_model.tflite)
 
- 3\. From the notebook **notebook_tflite_Service.ipynb**, I also created a **lambda_function.py** script the lambda_handler in which when invoked with a image (bird) url, returns the most probable class/species of the bird with the probability. 
+ 3\. From the notebook [**notebook_tflite_Service.ipynb**](notebooks/notebook_tflite_Service.ipynb), I also created a [**lambda_function.py**](model-serving/lambda_function.py) script the lambda_handler in which when invoked with a image (bird) url, returns the most probable class/species of the bird with the probability. 
 
  
 
 ## Dependency and environment management ##
 
- _All project dependencies are listed in the_ **_requirements.txt_**
+ _All project dependencies are listed in the_ [**_requirements.txt_**](requirements.txt)
 
  1\. Go the your wsl environment from you powershell terminal with administrator privilege. You should land in your WSL home directory by default.
 
@@ -156,14 +161,13 @@ With advancements in image classification models, it is now possible to develop 
 
  7\. You can see that the project directory shall have its own python version which can be different from the global version in your wsl environment. 
  
- ![alt text](Capstone1Screenshots/image0.png)
+ ![alt text](images/image0.png)
  
- 8\. You can now install the dependenncies for this project from the requirements.txt file. These dependencies shall only be accessible to the virtual environement created by pyenv in the project folder. And you don't have to explicitly do anything to activate the environment created in the project with pyenv.
+ 8\. You can now install the dependenncies for this project from the requirements.txt file. These dependencies shall only be accessible to the virtual environement created by pyenv in the project directory. And you don't have to explicitly do anything to activate the environment created in the project with pyenv. Just move inside the directory.
 
     pip install -r requirements.txt
 
- 9\. After the model training is over and model conversion from keras to tflite is complete, you would need numpy version 1.23.1 and tflite_runtime. So you need to isntall them
-     at that point of time (in my case, I did that from the notebook_tflite_Service.ipynb itself!)
+ 9\. After the model training is over and model conversion from keras to tflite is complete, you would need the tflite_runtime and compatible numpy version 1.23.1. So you need to install them at that point of time (in my case, I did that from the notebook_tflite_Service.ipynb itself!)
 
        pip install numpy==1.23.1
 
@@ -173,62 +177,79 @@ With advancements in image classification models, it is now possible to develop 
 
 ## Reproducibility ##
 
- 1\. Form within the project directory, run the jupyter notebook. From the Jupyter notebook GUI, you can open my notebooks **notebook_EDA.ipynb** and **notebook_Training.ipynb** and **notebook_tflite_service.ipynb** in the project directory and review them. Note: before running notebook_Training.ipynb remove the train, test & val folders inside the **dataset** directory, as the running the notebook re-creates them.
+ 1\. Form within the `notebook` directory in the project repository, run the jupyter notebook. From the Jupyter notebook GUI, you can open my notebooks **notebook_EDA.ipynb** and **notebook_Training.ipynb** and **notebook_tflite_service.ipynb** and review them. Note: before running notebook_Training.ipynb remove the train, test & val folders inside the **dataset** directory, as the running the notebook re-creates them.
+    
+    cd notebook
 
     jupyter notebook
 
- 2\. From inside the project directory at WSL, kindly run the **train.py** script to train model on the image dataset at the train & val folders inside the **dataset** directory which is under the project directory and save the best validation accuracy model(s) as describe in the section ***Exporting the Training Notebook to Script*** above
+ 2\. From inside the `model-development` directory in the project repository, kindly run the **train.py** script to train model on the image dataset at the train & val folders inside the **dataset** directory and save the best validation accuracy model(s) as describe in the section ***Exporting the Training Notebook to Script*** above
+
+    cd model-development
 
     python train.py
 
- ![alt text](Capstone1Screenshots/image3.png)
+   `Note: This images is older than the recent directory and file structuring in the repository. ` 
 
-  3\. From inside the project directory at WSL, kindly run the **convert-model.py** script to convert the model with best validation accuracy genratred with running train.py. One important thing to note here is you need to fillin the ***model_name*** variable in this script yourself: you choose the name of the best model generated when you run train.py for me the name is 'xception_v_script_17_0.956.h5 but for you it might be different name. So please change this variable with you model name.
+ ![alt text](images/image3.png)
+
+  3\. From inside this same directory, run the **convert-model.py** script to convert the model with best validation accuracy generated with running __train.py__. One important thing to note here is you need to fill in the ***model_name*** variable in this script yourself: you choose the name of the best model generated when you run __train.py__. For me the name is 'xception_v_script_17_0.956.h5 but for you it might be different name. So please change this variable with you model name.
 
     python convert-model.py
-
- ![alt text](Capstone1Screenshots/image4.png)
 
 
 
 ## Model Deployment ##
 
- Please run the **ipython** command from the project directory and inside the ipyhton prompt, invoke the lambda_handler with the url of the bird image to be predicted. The lambda_handler here is serving the model as in a deployment. Also in the subsequent section we containarize the service serving the model like in a deployment.
+ Please run the **ipython** command from the `model-serving` and inside the ipython prompt, invoke the lambda_handler with the image of the bird to be classfied in Base64 format. The lambda_handler here is serving the model as in a deployment. Also in the subsequent section we containarize the service serving the model like in a deployment.
 
- ![alt text](Capstone1Screenshots/image5.png)
+    cd model-serving
+    
+    ipython
+
+    import lambda_function
+
+    import base64
+
+    with open("../test_images/house_crow_image.jpg", "rb") as f_in:
+      img_b64 = base64.b64encode(f_in.read()).decode("utf-8")
+
+    lambda_function.predict(img_b64)
+
+
+ ![alt text](images/image5.png)
 
 
 ## Containerization ##
 
- 1\. Install Docker Deskop on you machine (currently I have Docker Desktop version 4.35.0 on my Windows 11 machine). If you have other set up, you may install docker accordingly (Mac/Linux/Windows 10)
+ 1\. Docker needs to be already installed in your system. If it is Docker Desktop installed in Windows, start the Docker Engine, if not already started. If the Docker is installed in the WSL itself, it is usually started. Check with docker commands:
 
- 2\. In the settings of Docker Desktop, in the 'General' tab/menu please ensure you have "Use the WSL 2 based engine (Windows Home can only run the WSL 2 backend)" checked/ticked
+     docker run hello-world
 
- 3\. Again, in the settings, "WSL integration" sub menu in the "Resources" menu/tab, please ensure "Enable integration with my default WSL distro" is checked/ticked. Further ensure that the "Enable integration with additional distros:" slider button is turned on.
 
- 4\. Start the Docker Engine in the Docker Desktop, if not already started.
+ 2\. Now open one WSL tab and go the project directory. From there, issue the command to build the docker image. The image would be built as as per the submitted **Dockerfile**.
 
- 5\. Now open one WSL tab and go the project directory. From there, issue the command to build the docker image. The image would be built as as per the submitted **Dockerfile**.
+    docker build -t indian-birds-classifier-ver03 .
 
-    docker build -t capstone1-mlz .
-
-  6\. After the image is built and the application successfully containerized, we can list the image from the WSL by following command
+ 3\. After the image is built and the application successfully containerized, we can list the image from the WSL by following command
 
     docker images
 
- ![alt text](Capstone1Screenshots/image6.png)
+  ![alt text](images/image6.png)
 
- 7\. Now run the containerized application.
+ 4\. Now run the containerized application.
 
-    docker run -it --rm -p 9696:9696 capstone1-mlz
+    docker run -it --rm -p 8080:8080 indian-birds-classifier-ver03
 
-  ![alt text](Capstone1Screenshots/image7.png)
+  ![alt text](images/image7.png)
 
- 8\.  Now open another WSL tab and go to the project directory and run the **test.py**  from inside the project directory to get the **predict** service from the containerized application
+ 5\.  Now open another WSL tab and go to the `model-service-test` directory and run the **test.py** to get the **predict** service from the containerized application
+
+    cd model-service-test
 
     python test.py
 
- ![alt text](Capstone1Screenshots/image8.png)
+ ![alt text](images/image8.png)
 
 
 ## Cloud Deployment ##
@@ -243,83 +264,108 @@ With advancements in image classification models, it is now possible to develop 
 
        aws ecr create-repository --repository-name capstone1-mlz
 
+   ![alt text](images/ecr.png)
+
+
  - After creation of the ECR repository, set the variables for REMOTE_URI to the ECR
 
        ACCOUNT=230579966543
        REGION=eu-north-1
        REGISTRY=capstone1-mlz
        PREFIX=${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${REGISTRY}
-       TAG=capstone1-model-ver-lambda01
+       TAG=capstone1-model-ver-lambda03
        REMOTE_URI=${PREFIX}:${TAG}
 
        echo ${REMOTE_URI}
 
+   ![alt text](images/remote_URI.png)
+
+
  - Tag the Docker image built on the local machine and push it to the ECR
 
-       docker tag capstone1-mlz:latest ${REMOTE_URI}
+       docker tag indian-birds-classifier-ver03:latest ${REMOTE_URI}
 
        docker push ${REMOTE_URI}
 
-     ![alt text](Capstone1Screenshots/image9.png)
+   ![alt text](images/pushed2ECR.png)
 
  - After the image has been pushed to the ECR repository, it shows there
  
-     ![alt text](Capstone1Screenshots/image10.png) 
+   ![alt text](images/image10.png) 
 
 
  2\. **Create a lambda function in AWS, using the ECR image**
 
  - Create the AWS Lambda function choosing options as Container Image 
 
- - Select the required container image from the ECR repository, i.e., ***capstone1-model-ver-lambda01***
+ - Select the required container image from the ECR repository, i.e., ***capstone1-model-ver-lambda03***
 
  - You should get the lambda function created shown as below
 
-     ![alt text](Capstone1Screenshots/image11.png)
+   ![alt text](images/image11.png)
 
 
- 3\. **Test the lambda function created**
+ 3\. **Edit default configuration of the the lambda function created**
 
  - Edit basic settings to increase Memory to 1024 MB and timeout to 30 seconds
 
- - Then test the lammbda function by creating & saving a Test Event 
- 
- - I used the url of the house crow used in our test script for creating the Test Event. The test shows the correct result:
-
-     ![alt text](Capstone1Screenshots/image12.png)
+   ![alt text](images/settings_lambda.png)
 
 
  4\. **Expose the lambda function using API Gateway**
 
   - Open the AWS API Gateway section and first create a new REST API
 
+    |                                        |                                            |
+    |----------------------------------------|--------------------------------------------|
+    |![alt text](images/rest-api-create.png) |  ![alt text](images/rest-api-created.png)  |
+
+
   - Now create a resource for the created API
 
+    |                                                  |                                           |
+    |--------------------------------------------------|-------------------------------------------|
+    | ![alt text](images/before-resource-creation.png) | ![alt text](images/resource-creation.png) |
+
+
   - Subsequently, create a Method for the Resource with method type as POST
+    
+    |                                       |                                              |
+    |---------------------------------------|----------------------------------------------|
+    | ![alt text](images/create-method.png) | ![alt text](images/post-method-creating.png) |
+
 
   - After Method is created, you can deploy the API by creating a stage
 
-  - We can see the stage ('test' in our case) has been created and the URL for public access of the API is generated here. 
+    |                                  |                                      |
+    |----------------------------------|--------------------------------------|
+    | ![alt text](images/to-deploy.png)| ![alt text](images/deploy-stage.png) |
+
+
+  - We can see the stage ('beta' in our case) has been created and the URL for public access of the API is generated here. 
     The genrated invoke url is given below but AWS API Gateway and Lambda services might not be running by the time you are 
     testing it as shall incur cost.
 
-       <https://mb74pfois9.execute-api.eu-north-1.amazonaws.com/test>
+    [https://mb74pfois9.execute-api.eu-north-1.amazonaws.com/test](https://vnj365geif.execute-api.eu-north-1.amazonaws.com/beta/predict)
 
-     ![alt text](Capstone1Screenshots/image13.png)
+    
+    |                              |                               |
+    |------------------------------|-------------------------------|
+    | ![alt text](images/last1.png)| ![alt text](images/last2.png) |    
 
 
  5\. **Testing the Lamda function with the API**
 
   - A test script cloud_test.py is created for testing the Lambda Function through the API from the gateway.
 
-     ![alt text](Capstone1Screenshots/image14.png)
+    ![alt text](images/images14.png)
 
   - Let us try again with a new bird from the 25 species. Let us take the Sarus Crane. Apart from a picture of Sarus Crane not in the dataset, 
     I found a complex picture where the are  are accompanying objects in similar pose which can be challenging for the model. Kindly check this 
     image of the Sarus Crane <https://static.theprint.in/wp-content/uploads/2023/03/Untitled-design-11-1.jpg?compress=true&quality=80&w=376&dpr=2.6>  
-    Now, let us change the input image url in the cloud_test.py script and run it. We can see the model correctly predicts the bird.
+    Now, let us put this image to test in the cloud_test.py script and run it. We can see the model correctly predicts the bird.
 
-     ![alt text](Capstone1Screenshots/image15.png)
+    ![alt text](images/images15.png)
 
 
 
