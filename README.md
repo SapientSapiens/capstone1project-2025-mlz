@@ -369,3 +369,11 @@ With advancements in image classification models, it is now possible to develop 
 
 
 
+## Streamlit Cloud Deployment of the frontend app ##
+
+ A front end for accessing the classification service has been developed with Streamlit and the [__app__](model-serving/app.py) has been deployed for user interaction with a [__public URL__](https://indian-birds-classify-mlz-eovex6mfbyuc8y2ksrqkft.streamlit.app)
+
+ 
+ |                                  |                                   |
+ |----------------------------------|-----------------------------------|
+ | ![alt text](images/front-end.png)| ![alt text](images/streamlit.png) |    
