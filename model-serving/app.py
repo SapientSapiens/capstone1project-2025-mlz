@@ -5,7 +5,8 @@ from PIL import Image, UnidentifiedImageError
 import io
 
 # ----------------- CONFIG -----------------
-API_URL = "https://ijtoaz6584.execute-api.eu-north-1.amazonaws.com/test/predict"
+API_URL = "https://vnj365geif.execute-api.eu-north-1.amazonaws.com/beta/predict"
+
 ALLOWED_SPECIES = [
     'Asian Green Bee-Eater', 'Brown-Headed Barbet', 'Cattle Egret', 'Common Kingfisher',
     'Common Myna', 'Common Rosefinch', 'Common Tailorbird', 'Coppersmith Barbet',
@@ -16,7 +17,7 @@ ALLOWED_SPECIES = [
 ]
 
 st.set_page_config(
-    page_title="Bird Classifier (Capstone1-MLZ)",
+    page_title="Indian Bird Classifier",
     page_icon="🦜",
     layout="wide"
 )
@@ -25,7 +26,7 @@ st.set_page_config(
 
 # ----------------- APP BODY -----------------
 with st.container():
-    st.title("🦜 Sapient Sapiens's Indian Bird Species Classifier")
+    st.title("🦜 Indian Bird Species Classifier")
     st.markdown(
             "<hr style='text-align: center; color: gray; font-size: 24px;'>"
              "<b>©Authored by Siddhartha Gogoi</b>"
@@ -43,23 +44,24 @@ with st.container():
         st.subheader("📋 Instructions")
         st.markdown("""
         - Upload an image of a bird.  
-        - Accepted formats: **PNG, JPEG, WEBP**.  
+        - Accepted formats: **PNG, JPEG, WEBP, AVIF, TIFF, BMP**.  
         - The model will predict the species out of the following list:  
         """)
         st.write("✅ Allowed Bird Species:")
         st.markdown(
-            "<div style='max-height: 500px; width: 85%; overflow-y: auto; border: 1px solid #ddd; "
-            "padding: 10px; border-radius: 8px; background-color: #f9f9f9;'>"
-            + "<br>".join(ALLOWED_SPECIES) +
-            "</div>",
+            "<div style='max-height: 600px; width: 320px; overflow-y: auto; border: 1px solid #ddd; "
+            "padding: 10px; border-radius: 8px; background-color: #f9f9f9; font-size: 14px;'>"
+            + "<br><b>".join(ALLOWED_SPECIES) + "</b></div>",
+
             unsafe_allow_html=True
         )
+
     
 
     with col2:
         st.subheader("📤 Upload Image & Get Prediction")
 
-        uploaded_file = st.file_uploader("Upload a bird image", type=["jpg", "jpeg", "png", "webp"])
+        uploaded_file = st.file_uploader("Upload a bird image", type=["jpg", "jpeg", "png", "webp", "avif", "bmp", ])
         
         # Confidence threshold slider
         confidence_threshold = st.slider(
@@ -74,20 +76,47 @@ with st.container():
         predict_button = st.button("🔮 Predict")
         result_box = st.empty()
 
+
+        def show_image_preview(uploaded):
+            """Preview without opening via PIL. Use HTML data URI for AVIF/HEIC/HEIF."""
+            mime = (uploaded.type or "").lower()
+            st.caption("Preview of uploaded image:")
+            # Formats PIL/Streamlit can usually render directly
+            pil_friendly = {"image/jpeg", "image/jpg", "image/png", "image/webp", "image/bmp", "image/tiff"}
+            if mime in pil_friendly:
+                uploaded.seek(0)
+                st.image(uploaded, use_container_width=True)
+            else:
+                # e.g., image/avif, image/heic, image/heif — render via browser
+                b64 = base64.b64encode(uploaded.getbuffer()).decode("utf-8")
+                st.markdown(
+                    f"<img src='data:{mime};base64,{b64}' style='max-width:100%; border-radius:8px;'/>",
+                    unsafe_allow_html=True
+                )
+            uploaded.seek(0)  # keep pointer sane for any later reads
+
+
         if predict_button:
             if not uploaded_file:
                 result_box.error("⚠️ Please upload an image before clicking Predict.")
             else:
                 try:
                     # Prepare image
-                    '''img = Image.open(uploaded_file)
-                    img = img.resize((299, 299)).convert("RGB")
-                    buffer = io.BytesIO()
-                    img.save(buffer, format="JPEG")
-                    img_b64 = base64.b64encode(buffer.getvalue()).decode("utf-8")'''
+
+                    # img = Image.open(uploaded_file)
+                    # img = img.resize((299, 299)).convert("RGB")
+                    # buffer = io.BytesIO()
+                    # img.save(buffer, format="JPEG")
+                    # img_b64 = base64.b64encode(buffer.getvalue()).decode("utf-8")'''
+
                     # although payload is heavier, I find this way more reliant as per test results!!
-                    with open(uploaded_file, "rb") as f_in:
-                        img_b64 = base64.b64encode(f_in.read()).decode("utf-8")
+                    # Read uploaded image as base64
+                    # img_b64 = base64.b64encode(uploaded_file.read()).decode("utf-8")
+                    # uploaded_file.seek(0)  # Reset pointer for st.image display
+
+                    # ---- NO IMAGE OPENING: read raw bytes and base64 encode (test-script style) ----
+                    file_bytes_view = uploaded_file.getbuffer()     # zero-copy memoryview
+                    img_b64 = base64.b64encode(file_bytes_view).decode("utf-8")
 
                     # Send request to Lambda
                     data = {"image_base64": img_b64}
@@ -126,9 +155,10 @@ with st.container():
                     result_box.info(display_text)
 
                     # Show uploaded image
-                    st.image(uploaded_file, caption="Uploaded Bird Image", use_container_width=True)
+                    show_image_preview(uploaded_file)
+                    #st.image(uploaded_file, caption="Uploaded Bird Image", use_container_width=True)
 
                 except UnidentifiedImageError:
-                    result_box.error("❌ Unsupported image format. Please upload JPG/PNG.")
+                    result_box.error("❌ Issue in image format for this image. Please explictly convert to JPG/PNG before uploading!.")
                 except Exception as e:
                     result_box.error(f"⚠️ Unexpected error: {e}")
