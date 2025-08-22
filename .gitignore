@@ -1,2 +1,20 @@
 # Ignore dataset directory
-dataset/
+dataset/# Ignore VS Code settings
+.vscode/
+
+# Ignore GitHub Codespaces dev container settings
+.devcontainer/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore local environment config
+*.env
