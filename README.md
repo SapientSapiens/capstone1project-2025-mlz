@@ -1,4 +1,4 @@
-# Bird Image Classifier #
+# 🦜 Bird Image Classifier #
 
 
 
@@ -369,11 +369,33 @@ With advancements in image classification models, it is now possible to develop 
 
 
 
-## Streamlit Cloud Deployment of the frontend app ##
+## Streamlit Front-end app deployed in Streamlit Cloud ##
 
- A front end for accessing the classification service has been developed with Streamlit and the [__app__](model-serving/app.py) has been deployed for user interaction with a [__public URL__](https://indian-birds-classify-mlz-eovex6mfbyuc8y2ksrqkft.streamlit.app)
+ **A front-end application for accessing the classification service served from the AWS API Gateway has been developed with Streamlit and the [__app__](model-serving/app.py) has been deployed for user interaction with a [__public URL__](https://indian-birds-classify-mlz-eovex6mfbyuc8y2ksrqkft.streamlit.app) at Streamlit Cloud.**
 
  
- |                                  |                                   |
- |----------------------------------|-----------------------------------|
- | ![alt text](images/front-end.png)| ![alt text](images/streamlit.png) |    
+  |                                  |                                   |
+  |----------------------------------|-----------------------------------|
+  | ![alt text](images/front-end.png)| ![alt text](images/streamlit.png) |    
+
+
+
+ **It is important to note that the Streamlit app was created on Streamlit Cloud by the option (there are 3 availaible) of cloning this repo there and pointing to the [_app.py file_](model-serving/app.py). Also, it is pertinent to mention that the AWS Cloudwatch logs get generated for each API call from the Streamlit app, i.e., for each invocation of the AWS Lambda Service.** 
+
+  |                                         |                                     |
+  |-----------------------------------------|-------------------------------------|
+  | ![alt text](images/streamlit-cloud.png) | ![alt text](images/cloud-watch.png) |    
+  
+
+
+ **An end to end demonstration of the Streamlit app can be seen below**
+
+  ![alt text](images/streamlit.gif) 
+
+
+  **Further the demo for the _Confidence Threshold_ feature of the app can also be witnessed**
+
+  ![alt text](images/confidence-threshold.gif) 
+
+
+ ### Thank You ###

@@ -1,5 +1,7 @@
 # Ignore dataset directory
-dataset/# Ignore VS Code settings
+dataset/
+
+# Ignore VS Code settings
 .vscode/
 
 # Ignore GitHub Codespaces dev container settings
