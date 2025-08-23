@@ -390,12 +390,12 @@ With advancements in image classification models, it is now possible to develop 
 
  **An end to end demonstration of the Streamlit app can be seen below**
 
-  ![alt text](images/streamlit.gif) 
+  ![alt text](images/main.gif) 
 
 
   **Further the demo for the _Confidence Threshold_ feature of the app can also be witnessed**
 
-  ![alt text](images/confidence-threshold.gif) 
+  ![alt text](images/CT.gif) 
 
 
- ### Thank You ###
+ ### Thank You For Being Here! ###
