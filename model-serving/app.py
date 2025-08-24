@@ -2,9 +2,17 @@ import streamlit as st
 import requests
 import base64
 from PIL import Image, UnidentifiedImageError
-import io
+
 
 # ----------------- CONFIG -----------------
+
+# Load API key from Streamlit secrets safely
+try:
+  API_KEY = st.secrets["api"]["key"]
+except KeyError:
+  st.error("❌🔑 API key not found. Please configure Streamlit secrets with [api] key.")
+  st.stop()
+
 API_URL = "https://vnj365geif.execute-api.eu-north-1.amazonaws.com/beta/predict"
 
 ALLOWED_SPECIES = [
@@ -103,62 +111,61 @@ with st.container():
                 try:
                     # Prepare image
 
-                    # img = Image.open(uploaded_file)
-                    # img = img.resize((299, 299)).convert("RGB")
-                    # buffer = io.BytesIO()
-                    # img.save(buffer, format="JPEG")
-                    # img_b64 = base64.b64encode(buffer.getvalue()).decode("utf-8")'''
-
-                    # although payload is heavier, I find this way more reliant as per test results!!
-                    # Read uploaded image as base64
-                    # img_b64 = base64.b64encode(uploaded_file.read()).decode("utf-8")
-                    # uploaded_file.seek(0)  # Reset pointer for st.image display
-
                     # ---- NO IMAGE OPENING: read raw bytes and base64 encode (test-script style) ----
                     file_bytes_view = uploaded_file.getbuffer()     # zero-copy memoryview
                     img_b64 = base64.b64encode(file_bytes_view).decode("utf-8")
 
                     # Send request to Lambda
                     data = {"image_base64": img_b64}
-                    response = requests.post(API_URL, json=data)
-                    result = response.json()
 
-                    predicted_class = result.get("predicted_class")
-                    probability = result.get("probability", 0)
-
-                    # Confidence level as percentage
-                    confidence_percentage = probability * 100
-
-                    # Show confidence progress bar
-                    progress_color = "green" if confidence_percentage >= 90 else "orange" if confidence_percentage >= 80 else "red"
-                    st.markdown(
-                        f"""
-                        <div style='width:100%;background-color:#ddd;border-radius:8px;'>
-                            <div style='width:{confidence_percentage:.2f}%;background-color:{progress_color};
-                                        padding:4px;border-radius:8px;text-align:center;color:white;'>
-                                {confidence_percentage:.2f}%
+                    # change for incorporating API KEY
+                    headers = {"x-api-key": API_KEY}
+                    response = requests.post(API_URL, headers=headers, json=data)
+                    
+                    if response.status_code == 200:      
+                        result = response.json()
+                        predicted_class = result.get("predicted_class")
+                        probability = result.get("probability", 0)
+                        # Confidence level as percentage
+                        confidence_percentage = probability * 100
+                        # Show confidence progress bar
+                        progress_color = "green" if confidence_percentage >= 90 else "orange" if confidence_percentage >= 80 else "red"
+                        st.markdown(
+                            f"""
+                            <div style='width:100%;background-color:#ddd;border-radius:8px;'>
+                                <div style='width:{confidence_percentage:.2f}%;background-color:{progress_color};
+                                            padding:4px;border-radius:8px;text-align:center;color:white;'>
+                                    {confidence_percentage:.2f}%
+                                </div>
                             </div>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-
-                    # Decide response based on slider
-                    if confidence_percentage < confidence_threshold:
-                        display_text = "🤔 The model is not confident enough to identify this bird."
-                    else:
-                        display_text = (
-                            f"✅ The bird appears to be a **{predicted_class}** "
-                            f"with a confidence of **{confidence_percentage:.2f}%**."
+                            """,
+                            unsafe_allow_html=True
                         )
 
-                    result_box.info(display_text)
+                        # Decide response based on slider
+                        if confidence_percentage < confidence_threshold:
+                            display_text = "🤔 The model is not confident enough to identify this bird."
+                        else:
+                            display_text = (
+                                f"✅ The bird appears to be a **{predicted_class}** "
+                                f"with a confidence of **{confidence_percentage:.2f}%**."
+                            )
 
-                    # Show uploaded image
-                    show_image_preview(uploaded_file)
-                    #st.image(uploaded_file, caption="Uploaded Bird Image", use_container_width=True)
+                        result_box.info(display_text)
+
+                        # Show uploaded image
+                        show_image_preview(uploaded_file)
+                        #st.image(uploaded_file, caption="Uploaded Bird Image", use_container_width=True)
+
+                    else:
+                      try:
+                        error_msg = response.json()  # Try parsing JSON
+                      except ValueError:
+                        error_msg = response.text   # Fallback to raw text if not JSON
+                      result_box.error(f"❌🛠️🔑 API Error {response.status_code}: {error_msg}")
+
 
                 except UnidentifiedImageError:
-                    result_box.error("❌ Issue in image format for this image. Please explictly convert to JPG/PNG before uploading!.")
+                    result_box.error("❌🖼️ Issue in image format for this image. Please explictly convert to JPG/PNG before uploading!.")
                 except Exception as e:
                     result_box.error(f"⚠️ Unexpected error: {e}")

@@ -20,3 +20,6 @@ venv/
 
 # Ignore local environment config
 *.env
+
+# Ignore secrets.toml of Streamlit which contain API Key
+# model-serving/.streamlit/secrets.toml
