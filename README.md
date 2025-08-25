@@ -398,4 +398,54 @@ With advancements in image classification models, it is now possible to develop 
   ![alt text](images/CT.gif) 
 
 
- ### Thank You For Being Here! ###
+## Securing your API ##
+
+  **Now that we have everything up & running nicely, have we wondered what if anyone just took our API and use it in their own application(s) or just have malicious intent**
+  **to bombard hundreds of concurrent requests clogging the service. This calls for a security measure where access to the API is prohibited even if they have the API url and restrictive measures to prevent clogging the service if they use hundreds of instances of the Streamlit hosted app to choke the service. The answers to this is:**
+
+   - __Implement a API Key for the API__
+   - __Set Request Rate and Burst count__
+
+  **How we do this:**
+
+   1\. We create an API KEY for the API and an Usage Plan for it. In the Usage Plan, I set the `Request Rate` & `Burst` as `60` & `60` respectively.
+
+   |                                          |                                            |
+   |------------------------------------------|--------------------------------------------|
+   | ![alt text](images/api-key-created.png)  | ![alt text](images/usage-plan-created.png) |   
+
+
+   2\. Subsequently, we associate a stage to the Usage Plan through Add stage wherein we select the `API` and the associated `Stage` with it.
+
+   3\. Post that, we associate a API Key to the Usage Pan through Add API key wherein we select the `API Key` we created above.
+
+   4\. After this, we can see in the API Key, the Associated Usage Plan automatically shows up.
+
+   |                                       |                                        |                                       |
+   |---------------------------------------|----------------------------------------|---------------------------------------|
+   | ![alt text](images/up-add-stage.png)  | ![alt text](images/up-add-apikey.png)  | ![alt text](images/auto-shows-up.png) |
+
+   
+   5\. Now, in the _Resources_ section of the API, select the _POST /predict_ method, and under _Method Request_, edit the `API key required` field to be `True` by checking the box with the same name.
+
+   6\. In the _Stages_ section of the API, edit the _Stage details_ part and set the `Rate` and `Burst` fields. I set mine to `60` & `60` respectively.
+
+   |                                         |                                     |
+   |-----------------------------------------|-------------------------------------|
+   | ![alt text](images/method-request.png)  | ![alt text](images/stages-edit.png) |    
+
+
+   7\. Now we are all set on the AWS Cloud side; we modify our code in our Streamlit app [app.py](model-serving/app.py).
+
+   8\. We can test it locally by creating a [.streamlit/secrets.toml](model-serving/.streamlit/secrets.toml) file and placing the API KEY in it. However, it is pertinent to note that it should not be committed/pushed to the remote Github repo since repo is the source for the Streamlit Cloud hosted app and it would conflict and override the secrets/keys you have set in the _Secrets_ section of the Settings in the Streamlit Cloud for your app. This is only for local development.
+
+   9\. Finally, we have to set the API KEY in TOML format at the `Secrets` section of `App Settings` of the hosted app at Streamlit Cloud.
+
+   |                                   |                                  |                                       |
+   |-----------------------------------|----------------------------------|---------------------------------------|
+   | ![alt text](images/app-ch-1.png)  | ![alt text](images/app-ch-2.png) | ![alt text](images/cloud-secrets.png) |
+
+
+
+
+### Thank You For Being Here! And Please Feel Free To Connect With Me At [LinkedIn]([text](https://www.linkedin.com/in/siddhartha-gogoi))
