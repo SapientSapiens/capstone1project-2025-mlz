@@ -448,4 +448,4 @@ With advancements in image classification models, it is now possible to develop 
 
 
 
-### Thank You For Being Here! And Please Feel Free To Connect With Me At [LinkedIn]([text](https://www.linkedin.com/in/siddhartha-gogoi))
+### Thank You For Being Here! And Please Feel Free To Connect With Me At [LinkedIn](https://www.linkedin.com/in/siddhartha-gogoi) ###
