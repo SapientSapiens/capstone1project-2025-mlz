@@ -1,6 +1,6 @@
 # 🦜 Bird Image Classifier #
 
- ![alt text](images/repo-cover-pic.jpg)
+ ![alt text](images/repo-cover-pic-final.jpg)
 
 ## Problem Description ##
 
